@@ -1,6 +1,6 @@
 # star
 
-A new Flutter project.
+Sarcopenia Screening App (STAR) 
 
 ## Getting Started
 
