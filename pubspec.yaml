@@ -1,0 +1,53 @@
+name: star
+description: "Screening Application for Sarcopenia"
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.5 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_splash_screen: ^3.0.0
+  easy_localization: ^3.0.7
+  url_launcher: ^6.3.0
+  fluttertoast: ^8.2.8
+  video_player: ^2.9.1
+  chewie: ^1.8.5
+  device_preview: ^1.2.0
+  icons_launcher: ^3.0.0
+  names_launcher: ^0.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  assets:
+    - assets/
+    - assets/translations/
+  uses-material-design: true
+  generate: true
+
+icons_launcher:
+  image_path: "assets/logo.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+
+names_launcher:
+  name: "STAR"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
