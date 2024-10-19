@@ -1,10 +1,18 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:star/page_ke_dokter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'main.dart';
 import 'page_execise.dart';
-import 'page_nutrisi.dart'; // Impor main.dart di sini
+import 'page_nutrisi.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:async';
+
+Stopwatch stopwatch = Stopwatch()..start();
 
 class PageKeusioner extends StatefulWidget {
   const PageKeusioner({super.key});
@@ -63,6 +71,7 @@ class _PageKeusionerState extends State<PageKeusioner> {
             icon: const Icon(Icons.zoom_out),
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -224,6 +233,13 @@ class _PageKeusionerState extends State<PageKeusioner> {
                             String resultText = totalScore > 3
                                 ? 'resultTextSarcopenia'.tr()
                                 : 'resultTextNoSarcopenia'.tr();
+
+                            stopwatch.stop();
+                            final elapsedMilliseconds =
+                                stopwatch.elapsedMilliseconds;
+                            print('--> Waktu respon: $elapsedMilliseconds ms');
+                            stopwatch.reset();
+                            stopwatch.start();
 
                             Navigator.push(
                               context,
@@ -469,16 +485,23 @@ class HasilKuesionerPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('resultTitle'.tr()),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        // Navigasi ke DashboardPage ketika tombol kembali di AppBar ditekan
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const DashboardPage()),
+        // );
+
+        // Navigator.pop(context);
+        // },
+        // ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              resultText,
-              style: const TextStyle(fontSize: 28),
-            ),
-            const SizedBox(height: 20),
             Text(
               '${'totalScoreText'.tr()} $totalScore',
               style: const TextStyle(
@@ -487,6 +510,18 @@ class HasilKuesionerPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 42),
+            Text(
+              "resultOfScreening".tr(),
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              resultText,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -547,6 +582,36 @@ class HasilKuesionerPage extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   child: Text('seeRecommendationsButton'.tr(),
+                      style: const TextStyle(fontSize: 24)),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    // await requestStoragePermission();
+                    final pdf = pw.Document();
+                    pdf.addPage(
+                      pw.Page(
+                        build: (pw.Context context) => pw.Center(
+                          child: pw.Text('Hello World!'),
+                        ),
+                      ),
+                    );
+                    print("--> print");
+
+                    // Simpan PDF ke penyimpanan perangkat
+                    // final file = File('example.pdf');
+                    // await file.writeAsBytes(await pdf.save());
+
+                    // Tampilkan pesan sukses
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('PDF berhasil dibuat!')),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text('Unduh hasil'.tr(),
                       style: const TextStyle(fontSize: 24)),
                 ),
               ],

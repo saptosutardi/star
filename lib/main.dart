@@ -55,116 +55,125 @@ class FirstSplashScreen extends StatelessWidget {
     // Mendapatkan tanggal saat ini
     DateTime now = DateTime.now();
     // Memformat tanggal sesuai dengan format yang diinginkan
-    String formattedDate = DateFormat('dd.MM.yy').format(now);
+    String formattedDate = "18.10.2024";
     return Scaffold(
-      // backgroundColor: Colors.red[50],
       appBar: AppBar(
         title: const Text(''), // Title kosong
         actions: const [], // Actions kosong
       ),
       body: Container(
-        // Menerapkan gradasi warna pada background
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
               Colors.white, // Warna putih di bagian atas
-              Colors.red[100]!, // Warna red[50] di bagian bawah
+              Colors.red[100]!, // Warna merah di bagian bawah
             ],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width, // Lebar sesuai layar
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  // Menyelaraskan pusat vertikal
-                  children: [
-                    Image(
-                      image: AssetImage("assets/logo.png"),
-                      height: 60,
-                      width: 60,
-                    ),
-                    SizedBox(width: 10), // Memberi jarak antara logo dan teks
-                    Column(
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // Bagian Logo dan Teks di atasnya
+                  Container(
+                    alignment: Alignment.center,
+                    width:
+                        MediaQuery.of(context).size.width, // Lebar sesuai layar
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      // Menyelaraskan teks di tengah vertikal
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // Menyelaraskan teks di sebelah kiri horizontal
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "STAR",
-                          style: TextStyle(
-                            fontSize: 42,
-                            // Sesuaikan ukuran font sesuai kebutuhan
-                            fontWeight: FontWeight.bold,
-                            // color: Colors.deepOrange, // Warna deepOrange
-                          ),
+                        Image(
+                          image: AssetImage("assets/logo.png"),
+                          height: 60,
+                          width: 60,
                         ),
-                        Text(
-                          "Sarcopenia Screening App",
-                          textAlign: TextAlign.center,
-                          // Menambahkan properti textAlign
-                          style: TextStyle(
-                            fontSize:
-                                12, // Sesuaikan ukuran font sesuai kebutuhan
-                            // color: Colors.black,
-                          ),
+                        SizedBox(
+                            width: 10), // Memberi jarak antara logo dan teks
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "STAR",
+                              style: TextStyle(
+                                fontSize: 42,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment
+                                  .start, // Rata kiri untuk seluruh Column
+                              children: [
+                                Text(
+                                  "Screening applicaTion", // Paragraf pertama
+                                  textAlign: TextAlign.left, // Rata kiri
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                Text(
+                                  "for sARcopenia", // Paragraf kedua
+                                  textAlign: TextAlign.left, // Rata kiri
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-
-              // Tambahkan versi aplikasi di bagian bawah
-              Positioned(
-                bottom: 500, // Geser ke bagian bawah
-                right: 14,
-                child: Text(
-                  formattedDate,
-                  style: const TextStyle(
-                    color: Colors.grey, // Warna sedikit kabur
                   ),
-                ),
-              ),
-              const Text(""),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    OutlinedButton(
+
+                  const SizedBox(
+                      height: 30), // Spasi antara bagian atas dan tombol
+
+                  // Tombol Start
+                  Align(
+                    alignment: Alignment.center,
+                    child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context,
-                            '/splashScreenTambahan'); // Ganti dengan rute yang sesuai
+                        Navigator.pushNamed(context, '/splashScreenTambahan');
                       },
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.deepOrange),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromARGB(255, 9, 6, 6)),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
                         side: MaterialStateProperty.all<BorderSide>(
                           const BorderSide(color: Colors.white),
                         ),
                       ),
                       child: Text(
-                        "startButton".tr(),
+                        "startButton".tr(), // Gunakan easy_localization
                         style:
                             const TextStyle(fontSize: 24, color: Colors.white),
                       ),
                     ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+
+            // Tanggal di bagian bawah layar
+            Positioned(
+              bottom:
+                  MediaQuery.of(context).size.height * 0.05, // Relatif ke layar
+              right: 14,
+              child: Text(
+                "18.20.2024",
+                style: const TextStyle(
+                  color: Colors.grey,
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -399,25 +408,30 @@ class _DashboardPageState extends State<DashboardPage> {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            // Tindakan ketika nama dr. Winda Hamida ditekan
-                            // Menghubungi melalui WhatsApp
-                            const phoneNumber =
-                                '628123456789'; // Ganti dengan nomor telepon yang sesuai
-                            var message = 'greetingUserDoctorNameApp'.tr();
-                            _launchWhatsApp(phoneNumber, message);
-                            print("--->> on Tap to WhatsApps");
-                          },
-                          child: const Text(
-                            'dr. Winda Nurhamda',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
-                                fontSize: 20),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Dr. Med. Sc. Irma Ruslina Defi, dr., Sp.K.F.R., Ger.(K)',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ),
                         const SizedBox(height: 10),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'dr. Deta Tanuwidjaja, Sp.K.F.R., FIPM(USG), AIFO-K',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'dr. Winda Nurhamda',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
                             // Tutup dialog

@@ -40,8 +40,58 @@ class _ExercisePageState extends State<ExercisePage> {
         title: Text('exerciseTitle'.tr()),
       ),
       body: SingleChildScrollView(
+        // child: Column(
+        //   children: videos.map((video) => VideoCard(video: video)).toList(),
+
+        // ),
+
         child: Column(
-          children: videos.map((video) => VideoCard(video: video)).toList(),
+          children: [
+            // Video list card
+            ...videos.map((video) => VideoCard(video: video)).toList(),
+            // Panduan latihan di bawah list card
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Panduan Latihan'.tr(),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  RichText(
+                    text: const TextSpan(
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      children: [
+                        TextSpan(
+                            text:
+                                '- Lakukan 3 set, masing-masing 10 repetisi per hari.\n'),
+                        TextSpan(
+                            text:
+                                '- Latihan dilakukan 3 kali dalam seminggu.\n'),
+                        TextSpan(
+                            text:
+                                '- Setiap gerakan harus dilakukan dengan perlahan dan terkendali.\n'),
+                        TextSpan(
+                            text:
+                                '- Pastikan untuk tidak menahan napas selama melakukan gerakan latihan.\n'),
+                        TextSpan(
+                          text:
+                              '- Hentikan latihan segera jika mengalami rasa sakit atau ketidaknyamanan.',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red, // Warna merah
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

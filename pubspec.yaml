@@ -21,7 +21,8 @@ dependencies:
   chewie: ^1.8.5
   device_preview: ^1.2.0
   icons_launcher: ^3.0.0
-  names_launcher: ^0.0.1
+  pdf: ^3.11.1
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
